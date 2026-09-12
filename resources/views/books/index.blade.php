@@ -1,39 +1,35 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>My Books</title>
-</head>
-<body>
+@extends('layouts.app')
 
-    <h1>My Book List</h1>
+@section('title', 'All Books')
 
-    <p>Prepared by: Renz Tyron Uchi</p>
+@section('content')
+    @forelse ($books as $book)
+        @if ($loop->first)
+            <table class="table table-striped table-bordered"></table>
+                <tr>
+                    <th>#</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Year</th>
+                </tr>
+        @endif
 
-    <table border="1" cellpadding="8">
         <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Author</th>
-            <th>Year</th>
-            <th>Category</th>
+            <td>{{ $loop->iteration }}</td>
+            <td><a href="{{ route('books.show', $book['id']) }}">{{ $book['title'] }}</a></td>
+            <td>{{ $book['author'] }}</td>
+            <td>
+                {{ $book['year'] }}
+                @if ($book['year'] < 1950)
+                    <span>(Classic)</span>
+                @endif
+            </td>
         </tr>
 
-        @foreach ($books as $book)
-            <tr>
-                <td>
-                    <a href="{{ route('books.show', $book['id']) }}">
-                        {{ $book['id'] }}
-                    </a>
-                </td>
-
-                <td>{{ $book['title'] }}</td>
-                <td>{{ $book['author'] }}</td>
-                <td>{{ $book['year'] }}</td>
-                <td>{{ $book['category'] }}</td>
-            </tr>
-        @endforeach
-
-    </table>
-
-</body>
-</html>
+        @if ($loop->last)
+            </table>
+        @endif
+    @empty
+        <p>No books are available right now. Please check back later.</p>
+    @endforelse
+@endsection
