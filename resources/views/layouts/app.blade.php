@@ -7,12 +7,13 @@
 </head>
 <body>
     <div class="container">
-        <h1>My Book Site</h1>
+        <h1>Renz Book List</h1>
         <p>Prepared by: Renz Tyron Uchi</p>
 
         @include('partials._nav')
 
         @yield('content')
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

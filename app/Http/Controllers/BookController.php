@@ -23,7 +23,18 @@ class BookController extends Controller
         $books = $this->getBooks();
         return view('books.index', ['books' => $books]);
     }
-    public function show($id)
+
+    public function create()
+    {
+        //
+    }
+
+    public function store(Request $request)
+    {
+        //
+    }
+
+    public function show(string $id)
     {
         $books = $this->getBooks();
 
@@ -31,20 +42,30 @@ class BookController extends Controller
             abort(404);
         }
 
-        return view('books.show', [
-            'book' => $books[$id]
-        ]);
+        return view('books.show', ['book' => $books[$id]]);
+    }
+
+    public function edit(string $id)
+    {
+        //
+    }
+
+    public function update(Request $request, string $id)
+    {
+        //
+    }
+
+    public function destroy(string $id)
+    {
+        //
     }
 
     public function featured()
     {
         $books = $this->getBooks();
-
         $featured = $books[3];
 
-        return view('books.show', [
-            'book' => $featured
-        ]);
+        return view('books.show', ['book' => $featured]);
     }
 
     public function filter($value = null)
@@ -55,7 +76,6 @@ class BookController extends Controller
             $filtered = $books;
         } else {
             $filtered = [];
-
             foreach ($books as $book) {
                 if ($book['category'] === $value) {
                     $filtered[] = $book;
@@ -63,9 +83,6 @@ class BookController extends Controller
             }
         }
 
-        return view('books.filter', [
-            'books' => $filtered,
-            'value' => $value
-        ]);
+        return view('books.filter', ['books' => $filtered, 'value' => $value]);
     }
 }

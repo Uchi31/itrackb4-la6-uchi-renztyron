@@ -5,7 +5,7 @@
 @section('content')
     @forelse ($books as $book)
         @if ($loop->first)
-            <table class="table table-striped table-bordered"></table>
+            <table class="table table-striped table-bordered">
                 <tr>
                     <th>#</th>
                     <th>Title</th>
