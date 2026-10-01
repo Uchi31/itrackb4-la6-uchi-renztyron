@@ -10,7 +10,8 @@ Route::get('/whoami', function () {
 Route::get('/books/featured', [BookController::class, 'featured'])
     ->name('books.featured');
 
-Route::get('/books/filter/{value?}', [BookController::class, 'filter'])
-    ->name('books.filter');
+Route::get('/books/filter/{value?}', function ($value = null) {
+    return redirect()->route('books.index', ['category' => $value]);
+});
 
 Route::resource('books', BookController::class)->only(['index', 'show']);

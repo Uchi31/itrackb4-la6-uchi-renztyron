@@ -3,6 +3,34 @@
 @section('title', 'All Books')
 
 @section('content')
+    <p>
+        Filter by category:
+        <a href="{{ route('books.index', ['category' => 'Motivation', 'year' => $year]) }}">Motivation</a>
+        |
+        <a href="{{ route('books.index', ['category' => 'Self-Help', 'year' => $year]) }}">Self-Help</a>
+        |
+        <a href="{{ route('books.index', ['category' => 'Psychology', 'year' => $year]) }}">Psychology</a>
+    </p>
+
+    <p>
+        Filter by year:
+        <a href="{{ route('books.index', ['category' => $category, 'year' => 1937]) }}">1937</a>
+        |
+        <a href="{{ route('books.index', ['category' => $category, 'year' => 2018]) }}">2018</a>
+    </p>
+
+    <p>
+        @if ($category || $year)
+            Active filters:
+            @if ($category) Category: {{ $category }} @endif
+            @if ($year) Year: {{ $year }} @endif
+            |
+            <a href="{{ route('books.index') }}">Clear all filters</a>
+        @else
+            Showing all books
+        @endif
+    </p>
+
     @forelse ($books as $book)
         @if ($loop->first)
             <table class="table table-striped table-bordered">

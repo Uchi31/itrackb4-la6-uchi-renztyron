@@ -18,11 +18,35 @@ class BookController extends Controller
         ];
     }
 
-    public function index()
-    {
-        $books = $this->getBooks();
-        return view('books.index', ['books' => $books]);
+    public function index(Request $request)
+{
+    $books = $this->getBooks();
+
+    $category = $request->query('category', '');
+    $year = $request->query('year', '');
+
+    if ($category !== '') {
+        foreach ($books as $key => $book) {
+            if ($book['category'] !== $category) {
+                unset($books[$key]);
+            }
+        }
     }
+
+    if ($year !== '') {
+        foreach ($books as $key => $book) {
+            if ($book['year'] != $year) {
+                unset($books[$key]);
+            }
+        }
+    }
+
+    return view('books.index', [
+        'books' => $books,
+        'category' => $category,
+        'year' => $year,
+    ]);
+}
 
     public function create()
     {
@@ -68,21 +92,5 @@ class BookController extends Controller
         return view('books.show', ['book' => $featured]);
     }
 
-    public function filter($value = null)
-    {
-        $books = $this->getBooks();
-
-        if ($value === null) {
-            $filtered = $books;
-        } else {
-            $filtered = [];
-            foreach ($books as $book) {
-                if ($book['category'] === $value) {
-                    $filtered[] = $book;
-                }
-            }
-        }
-
-        return view('books.filter', ['books' => $filtered, 'value' => $value]);
-    }
+    
 }
